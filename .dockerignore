@@ -1,0 +1,24 @@
+# Dependencies and generated output
+**/node_modules
+**/dist
+**/coverage
+**/*.tsbuildinfo
+
+# Never copy local secrets into an image or build context
+.env
+.env.*
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.*.example
+
+# Git and editor files
+.git
+.gitignore
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*

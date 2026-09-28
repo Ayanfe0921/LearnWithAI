@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root { font-family: 'DM Sans', sans-serif; color: #22223b; background: #f7f8fc; font-synthesis: none; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; min-height: 100vh; background: radial-gradient(ellipse at 50% 44%, #fff 0%, #f7f8fc 65%); }
+.shell { min-height: 100vh; display: flex; flex-direction: column; padding: 27px clamp(22px, 6vw, 88px) 22px; }
+.topbar { display: flex; align-items: center; justify-content: space-between; max-width: 1240px; width: 100%; margin: 0 auto; }
+.brand { display: inline-flex; align-items: center; gap: 10px; color: #262541; font: 800 18px Manrope, sans-serif; letter-spacing: -.7px; text-decoration: none; }
+.brand-mark { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 11px; color: white; font-size: 17px; background: linear-gradient(140deg, #7772ee, #554fce); box-shadow: 0 5px 12px #625bd333; }
+.brand-accent { color: #716be5; }
+.hero { display: flex; flex-direction: column; align-items: center; text-align: center; padding: clamp(70px, 12vh, 130px) 16px 55px; }
+.eyebrow { display: flex; align-items: center; gap: 8px; color: #77768c; font: 700 10px 'DM Sans', sans-serif; letter-spacing: 1.8px; }
+.eyebrow-dot { width: 7px; height: 7px; background: #7772ee; border-radius: 50%; box-shadow: 0 0 0 4px #7772ee1c; }
+h1 { margin: 23px 0 13px; color: #27263f; font: 800 clamp(46px, 7vw, 76px)/1.08 Manrope, sans-serif; letter-spacing: -4.4px; }
+h1 span { color: #716be5; }
+.hero > p { max-width: 420px; margin: 0; color: #77768c; font-size: 15px; line-height: 1.8; }
+.sign-in-card { width: min(100%, 370px); margin-top: 31px; padding: 24px 25px; border: 1px solid #e9e9f1; border-radius: 17px; background: #fff; box-shadow: 0 14px 40px #27263f0c; text-align: left; }
+.card-heading { color: #2a2943; font: 700 15px Manrope, sans-serif; }
+.card-copy { margin: 6px 0 19px; color: #89889b; font-size: 12px; }
+.sign-in-card .cl-rootBox, .sign-in-card .cl-card { width: 100%; box-shadow: none; }
+.welcome-card { display: flex; align-items: center; gap: 14px; margin-top: 35px; padding: 19px 23px; border: 1px solid #e9e9f1; border-radius: 15px; background: white; text-align: left; box-shadow: 0 12px 32px #27263f0c; }
+.welcome-icon { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px; color: #716be5; background: #f0efff; font-size: 20px; }
+.welcome-card strong { font: 700 14px Manrope, sans-serif; }
+.welcome-card p { margin: 4px 0 0; color: #89889b; font-size: 12px; }
+footer { margin-top: auto; color: #a3a2b1; font-size: 11px; text-align: center; letter-spacing: .2px; }
+@media (max-width: 520px) { .shell { padding-top: 19px; } .hero { padding-top: 78px; } h1 { letter-spacing: -2.8px; } .sign-in-card { padding: 20px 17px; } }
