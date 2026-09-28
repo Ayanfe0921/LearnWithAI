@@ -3,10 +3,12 @@ import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
 import { clerkMiddleware, getAuth, requireAuth } from '@clerk/express'
+import { fileURLToPath } from 'node:url'
 
 const app = express()
 const port = Number(process.env.PORT ?? 4000)
 const frontendUrl = process.env.FRONTEND_URL ?? 'http://localhost:5173'
+const frontendDirectory = fileURLToPath(new URL('../public', import.meta.url))
 
 app.use(cors({ origin: frontendUrl, credentials: true }))
 app.use(express.json())
@@ -18,6 +20,17 @@ app.get('/api/health', (_req, res) => {
 
 app.get('/api/me', requireAuth(), (req, res) => {
   res.json({ userId: getAuth(req).userId })
+})
+
+app.use(express.static(frontendDirectory))
+app.use((req, res, next) => {
+  if (req.method === 'GET' && !req.path.startsWith('/api/')) {
+    res.sendFile(`${frontendDirectory}/index.html`, (error) => {
+      if (error) next(error)
+    })
+    return
+  }
+  next()
 })
 
 async function start() {
