@@ -11,7 +11,6 @@ RUN npm run build
 
 FROM node:24-alpine AS backend-build
 WORKDIR /app/backend
-ENV NODE_ENV=production
 COPY backend/package.json backend/package-lock.json ./
 RUN npm ci
 COPY backend/tsconfig.json ./
