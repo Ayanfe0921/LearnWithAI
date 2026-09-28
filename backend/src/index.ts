@@ -4,6 +4,8 @@ import cors from 'cors'
 import mongoose from 'mongoose'
 import { clerkMiddleware, getAuth, requireAuth } from '@clerk/express'
 import { fileURLToPath } from 'node:url'
+import Course from './models/Course.js'
+import { courseSeeds } from './data/courseSeeds.js'
 
 const app = express()
 const port = Number(process.env.PORT ?? 4000)
@@ -15,7 +17,16 @@ app.use(express.json())
 app.use(clerkMiddleware())
 
 app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok', service: 'learnwithai-api' })
+  res.json({ status: 'ok', service: 'LearnWithAI-api' })
+})
+
+app.get('/api/courses', async (_req, res, next) => {
+  try {
+    const courses = await Course.find().sort({ title: 1 }).lean()
+    res.json(courses.map(({ slug, _id, __v, ...course }) => ({ id: slug, ...course })))
+  } catch (error) {
+    next(error)
+  }
 })
 
 app.get('/api/me', requireAuth(), (req, res) => {
@@ -39,6 +50,9 @@ async function start() {
   if (!process.env.CLERK_SECRET_KEY) throw new Error('Set CLERK_SECRET_KEY in backend/.env before starting the API.')
 
   await mongoose.connect(mongoUri)
+  await Course.bulkWrite(courseSeeds.map((course) => ({
+    updateOne: { filter: { slug: course.slug }, update: { $setOnInsert: course }, upsert: true },
+  })))
   app.listen(port, () => console.log(`LearnWithAI API listening on http://localhost:${port}`))
 }
 

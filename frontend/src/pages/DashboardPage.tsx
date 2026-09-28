@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { UserButton, useUser } from '@clerk/react'
 import { BookOpen, ChevronRight, Flame, GraduationCap, Sparkles, Target } from '../components/Icons'
 import DailyQuote from '../components/DailyQuote'
+import CourseCatalogPage from './CourseCatalogPage'
 import FirstCourseCard from '../components/FirstCourseCard'
 import LearningStatCard from '../components/LearningStatCard'
 import Sidebar, { type DashboardSection } from '../components/Sidebar'
@@ -12,7 +13,7 @@ export default function DashboardPage({ companionId, onChangeCompanion }: { comp
   const [section, setSection] = useState<DashboardSection>('home')
   const companion = companions.find(({ id }) => id === companionId) ?? companions[0]
   const firstName = user?.firstName || user?.username || 'Learner'
-  const title = section === 'home' ? 'Overview' : section === 'courses' ? 'My learning' : 'My progress'
+  const title = section === 'home' ? 'Overview' : section === 'courses' ? 'Courses' : 'My progress'
 
   return (
     <div className="dashboard-shell">
@@ -24,11 +25,12 @@ export default function DashboardPage({ companionId, onChangeCompanion }: { comp
         </header>
 
         <div className="dashboard-content">
+          {section === 'courses' ? <CourseCatalogPage /> : <>
           <section className="welcome-banner">
             <div className="welcome-copy">
               <div className="eyebrow"><span className="eyebrow-dot" /> YOUR NEXT CHAPTER STARTS HERE</div>
-              <h1>{section === 'home' ? `Good to have you here, ${firstName}.` : section === 'courses' ? 'Your learning paths.' : 'Your progress, at a glance.'}</h1>
-              <p>{section === 'home' ? 'What would you like to learn today? We will help you find a good place to start.' : section === 'courses' ? 'The courses you create and save will live here.' : 'Every session is a step forward. Your milestones will show up here.'}</p>
+              <h1>{section === 'home' ? `Good to have you here, ${firstName}.` : 'Your progress, at a glance.'}</h1>
+              <p>{section === 'home' ? 'What would you like to learn today? We will help you find a good place to start.' : 'Every session is a step forward. Your milestones will show up here.'}</p>
             </div>
             <div className={`welcome-mascot ${companion.color}`}><span>{companion.emoji}</span><i><Sparkles size={16} /></i></div>
           </section>
@@ -52,6 +54,7 @@ export default function DashboardPage({ companionId, onChangeCompanion }: { comp
             <DailyQuote />
           </div>
           <div className="dashboard-footer">Made for curious minds <span>&#x2726;</span></div>
+          </>}
         </div>
       </main>
     </div>

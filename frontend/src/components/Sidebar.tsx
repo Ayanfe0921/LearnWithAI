@@ -24,7 +24,7 @@ export default function Sidebar({
       <div className="side-label">WORKSPACE</div>
       <nav className="side-nav" aria-label="Main navigation">
         <button className={section === 'home' ? 'active' : ''} onClick={() => onSectionChange('home')}><LayoutDashboard size={18} /> Overview</button>
-        <button className={section === 'courses' ? 'active' : ''} onClick={() => onSectionChange('courses')}><BookOpen size={18} /> My learning</button>
+        <button className={section === 'courses' ? 'active' : ''} onClick={() => onSectionChange('courses')}><BookOpen size={18} /> Courses</button>
         <button className={section === 'progress' ? 'active' : ''} onClick={() => onSectionChange('progress')}><Trophy size={18} /> My progress</button>
       </nav>
       <div className="sidebar-bottom">

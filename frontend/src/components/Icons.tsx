@@ -7,7 +7,9 @@ function Icon({ children, size = 20, strokeWidth = 2, ...props }: IconProps & { 
 }
 
 export const ArrowRight = (props: IconProps) => <Icon {...props}><path d="M5 12h14M12 5l7 7-7 7" /></Icon>
+export const ArrowUpRight = (props: IconProps) => <Icon {...props}><path d="M7 17 17 7M7 7h10v10" /></Icon>
 export const BookOpen = (props: IconProps) => <Icon {...props}><path d="M12 7v14m0-14C9.5 4.8 6.5 4 3 4v14c3.5 0 6.5.8 9 3m0-14c2.5-2.2 5.5-3 9-3v14c-3.5 0-6.5.8-9 3" /></Icon>
+export const Bot = (props: IconProps) => <Icon {...props}><path d="M12 8V4m-2 0h4M8 11h.01M16 11h.01M7 16h10M5 9h14a2 2 0 0 1 2 2v7a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-7a2 2 0 0 1 2-2Z" /><path d="M3 14H1m22 0h-2" /></Icon>
 export const Check = (props: IconProps) => <Icon {...props}><path d="m5 12 4 4L19 6" /></Icon>
 export const ChevronRight = (props: IconProps) => <Icon {...props}><path d="m9 18 6-6-6-6" /></Icon>
 export const CircleHelp = (props: IconProps) => <Icon {...props}><circle cx="12" cy="12" r="10" /><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3m.1 4h.01" /></Icon>
@@ -17,6 +19,7 @@ export const Flame = (props: IconProps) => <Icon {...props}><path d="M8.5 14.5c0
 export const GraduationCap = (props: IconProps) => <Icon {...props}><path d="m2 10 10-5 10 5-10 5-10-5Zm4 2v5c3.5 2.7 8.5 2.7 12 0v-5m4-2v6" /></Icon>
 export const LayoutDashboard = (props: IconProps) => <Icon {...props}><rect x="3" y="3" width="8" height="8" rx="1.5" /><rect x="13" y="3" width="8" height="5" rx="1.5" /><rect x="13" y="10" width="8" height="11" rx="1.5" /><rect x="3" y="13" width="8" height="8" rx="1.5" /></Icon>
 export const Plus = (props: IconProps) => <Icon {...props}><path d="M12 5v14M5 12h14" /></Icon>
+export const Search = (props: IconProps) => <Icon {...props}><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></Icon>
 export const Sparkles = (props: IconProps) => <Icon {...props}><path d="m12 3 1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3Zm7 12 .9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15Z" /></Icon>
 export const Target = (props: IconProps) => <Icon {...props}><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></Icon>
 export const Trophy = (props: IconProps) => <Icon {...props}><path d="M8 21h8m-4-4v4m-5-18h10v5a5 5 0 0 1-10 0V3ZM7 6H3v2a5 5 0 0 0 5 5m9-7h4v2a5 5 0 0 1-5 5" /></Icon>
