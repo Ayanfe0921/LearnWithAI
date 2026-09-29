@@ -38,7 +38,7 @@ router.post('/:courseId/lessons/:chapterIndex', requireAuth(), async (req, res, 
     const existingProgress = await CourseProgress.findOne({ userId, courseSlug: course.slug }).lean()
     const currentLevel = (existingProgress?.currentLevel ?? 'Beginner') as CourseLevel
     if (chapterLevels[lessonIndex].level !== currentLevel) return res.status(409).json({ message: `This lesson is locked. Finish the ${currentLevel} level to unlock the next level.` })
-    const progress = await CourseProgress.findOneAndUpdate({ userId, courseSlug: course.slug }, { $addToSet: { completedChapters: lessonIndex }, $set: { lastChapterIndex: lessonIndex, curriculumVersion: 3 } }, { new: true, upsert: true, setDefaultsOnInsert: true })
+    const progress = await CourseProgress.findOneAndUpdate({ userId, courseSlug: course.slug }, { $addToSet: { completedChapters: lessonIndex }, $set: { lastChapterIndex: lessonIndex, curriculumVersion: 4 } }, { new: true, upsert: true, setDefaultsOnInsert: true })
     const levelLessonIndices = chapterLevels.flatMap((item, index) => item.level === currentLevel ? [index] : [])
     if (levelLessonIndices.every((index) => progress.completedChapters.includes(index))) {
       const nextLevel = courseLevels[courseLevels.indexOf(currentLevel) + 1]

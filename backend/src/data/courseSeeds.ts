@@ -166,7 +166,8 @@ const lessonExample = (slug: string, title: string, index: number) => {
   if (title.includes('Test')) return 'Test a sign-up form with an empty email, an invalid email, and a valid email, then inspect the production build and browser network panel.'
   if (title.includes('Security')) return 'Check that a signed-in learner cannot fetch another learner’s progress by changing an ID in the browser request.'
   if (title.includes('capstone')) return 'Build a responsive course tracker in React. Style it with Tailwind, use Lucide React for labeled controls, persist progress through an API, then test and deploy it.'
-  return practicalExamples[slug]
+  const exampleFocus = title.toLowerCase()
+  return `In a practical ${slug.replace(/-/g, ' ')} scenario, focus on ${exampleFocus}. Start with a small case, write down the outcome you need, apply the method in a few clear steps, and compare the result with your criteria. Record what changed and what you would investigate next.`
 }
 
 const lessonDiagram = (title: string, focus: string) => {
@@ -180,7 +181,10 @@ const lessonDiagram = (title: string, focus: string) => {
 const makeLessons = (slug: string, courseTitle: string, curriculum: LevelCurriculum[]) => {
   let lessonIndex = 0
   return curriculum.flatMap(({ level, lessons }) => lessons.map(({ title, focus }, index) => {
-  const example = lessonExample(slug, title, lessonIndex++)
+  const example = title.includes(': ')
+    ? `Work through this focused exercise: ${focus} Begin with one concrete case and a clear success condition. Apply each step in order, then explain how you checked the result.`
+    : lessonExample(slug, title, lessonIndex)
+  lessonIndex += 1
   const subtopics = focus.split(/,|;| then | and /i).map((part) => part.trim()).filter((part) => part.length > 12).slice(0, 4)
   const subtopicNotes = subtopics.map((part, subtopicIndex) => `${part}\n${subtopicIndex === 0
     ? `Start by making this idea concrete. Identify what information or materials you need, what decision you are trying to make, and what a successful result would look like. This prevents you from jumping into steps before you understand the task.`
@@ -276,7 +280,56 @@ const course = (details: Omit<CourseSeed, 'lessons' | 'chapters' | 'priceNgn'>, 
   }
   const extras = details.slug === 'cybersecurity-basics' ? cybersecurityExtras : levelExtras
   const expandedCurriculum = curriculum.map(({ level, lessons }) => ({ level, lessons: [...lessons, ...extras[level]] }))
-  const chapters = makeLessons(details.slug, details.title.toLowerCase(), expandedCurriculum)
+  const expansionExercises: Record<CourseLevel, LessonTopic[]> = {
+    Beginner: [
+      { title: 'Key vocabulary in context', focus: 'Define the important terms, distinguish similar ideas, and explain each term with an example from the topic.' },
+      { title: 'A guided step-by-step example', focus: 'Work through a small example in order, explain why each step is needed, and check the finished result.' },
+      { title: 'Choose the right starting point', focus: 'Read a short scenario, identify its goal and constraints, and select a suitable first action.' },
+      { title: 'Common errors and corrections', focus: 'Recognize a frequent beginner error, trace why it happens, and use a check to prevent it.' },
+      { title: 'Explain the concept simply', focus: 'Teach the idea in plain language, use a concrete example, and correct any confusing or inaccurate wording.' },
+      { title: 'A short practice challenge', focus: 'Complete a small task, record the steps you took, and compare the result with a clear success condition.' },
+      { title: 'Compare two examples', focus: 'Find what two examples have in common, identify what differs, and explain how context changes the right choice.' },
+      { title: 'Build a personal reference guide', focus: 'Create a concise checklist of key terms, steps, and warning signs that you can use on a new task.' },
+    ],
+    Intermediate: [
+      { title: 'Compare methods with evidence', focus: 'Compare two valid methods using clear criteria, evidence from the task, and the trade-offs each method creates.' },
+      { title: 'Diagnose a flawed result', focus: 'Inspect an imperfect result, identify the earliest likely cause, and verify a correction with a repeatable check.' },
+      { title: 'Adapt to a new situation', focus: 'Apply a familiar method to a changed context, identify which assumptions no longer hold, and adjust the process.' },
+      { title: 'Work within real constraints', focus: 'Plan a solution around limited time, tools, or information while making the effect of each constraint explicit.' },
+      { title: 'Document your reasoning', focus: 'Record the goal, evidence, assumptions, chosen method, and result so another person can review the work.' },
+      { title: 'Use feedback to improve', focus: 'Collect specific feedback, separate evidence from preference, and choose one measurable improvement to make next.' },
+      { title: 'A multi-step case study', focus: 'Solve a realistic case by combining earlier skills in a deliberate order and checking the result at each stage.' },
+    ],
+    Expert: [
+      { title: 'Plan an end-to-end case', focus: 'Translate a complex need into requirements, milestones, success measures, risks, and a practical delivery plan.' },
+      { title: 'Analyze failure and recovery', focus: 'Examine a realistic failure, prioritize its causes and impact, and prepare a recovery and prevention plan.' },
+      { title: 'Evaluate trade-offs and risk', focus: 'Compare competing choices across quality, cost, time, safety, and user impact, then defend a balanced decision.' },
+      { title: 'Apply a professional quality review', focus: 'Review a complete piece of work against professional criteria, edge cases, and the needs of its intended audience.' },
+      { title: 'Present and defend a solution', focus: 'Present a solution with supporting evidence, explain limitations, respond to critique, and identify the next iteration.' },
+    ],
+  }
+  const expansionCurriculum = (['Beginner', 'Intermediate', 'Expert'] as const).map((level) => {
+    const currentCount = expandedCurriculum.find((item) => item.level === level)?.lessons.length ?? 0
+    const targetCount = level === 'Beginner' ? 18 : level === 'Intermediate' ? 17 : 15
+    const numberToAdd = Math.max(0, targetCount - currentCount)
+    const sourceLessons = curriculum.find((item) => item.level === level)?.lessons ?? []
+    const exercises = expansionExercises[level]
+    return {
+      level,
+      lessons: Array.from({ length: numberToAdd }, (_, index) => {
+        const exercise = exercises[index % exercises.length]
+        const source = sourceLessons[index % Math.max(1, sourceLessons.length)]
+        return {
+          title: `${exercise.title}: ${source?.title ?? details.title}`,
+          focus: `${exercise.focus} Apply the process to “${source?.title ?? details.title}”: ${source?.focus ?? details.description}`,
+        }
+      }),
+    }
+  })
+  const chapters = [
+    ...makeLessons(details.slug, details.title.toLowerCase(), expandedCurriculum),
+    ...makeLessons(details.slug, details.title.toLowerCase(), expansionCurriculum),
+  ]
   return { ...details, priceNgn: coursePriceNgnBySlug[details.slug], lessons: chapters.length, chapters }
 }
 

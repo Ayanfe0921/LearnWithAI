@@ -3,6 +3,7 @@ import { useAuth } from '@clerk/react'
 import { ArrowRight, Bot, BookOpen, Check, Clock3, GraduationCap } from '../components/Icons'
 import type { CourseCardData, CourseLevel } from '../components/CourseCard'
 import CourseCertificate from '../components/CourseCertificate'
+import CourseOverviewComplete from '../components/CourseOverviewComplete'
 import { formatCourseCategory } from '../data/courses'
 import type { CourseProgress } from '../types/progress'
 import CourseCheckpointPage from './CourseCheckpointPage'
@@ -145,14 +146,11 @@ export default function CourseDetailPage({
         <button className={activeTab === 'checkpoint' ? 'active' : ''} onClick={() => setActiveTab('checkpoint')}>Checkpoint</button>
       </nav>
 
-      {activeTab === 'overview' && <div className="lesson-overview">
-        <div><span className="panel-kicker">COURSE OVERVIEW</span><h2>Three levels, from foundations to expert practice</h2><p>Complete Beginner to unlock Intermediate, then complete Intermediate to unlock Expert. Finish every Expert lesson to earn your certificate. This course has {course.chapters.length} lessons in total.</p></div>
-        <div className="lesson-overview-art">{course.image ? <img src={course.image} alt={`${course.title} illustration`} /> : <span role="img" aria-label={course.title}>{course.emoji}</span>}</div>
-      </div>}
+      {activeTab === 'overview' && <CourseOverviewComplete course={course} />}
 
       {activeTab !== 'overview' && progress && <div className="course-progress-strip"><span>Course progress · {currentLevel} ({progress.levelCompletedLessons}/{progress.levelTotalLessons})</span><div><span style={{ width: `${progress.percent}%` }} /></div><strong>{progress.percent}%</strong></div>}
 
-      {activeTab === 'checkpoint' ? <CourseCheckpointPage course={course} level={currentLevel} /> : activeTab === 'overview' ? <div className="course-overview-levels">{courseLevels.map((level, index) => <article key={level}><span className="panel-kicker">LEVEL {index + 1}</span><h3>{level}</h3><p>{course.chapters.filter((item) => item.level === level).length} lessons · {index === 0 ? 'Build the foundations' : index === 1 ? 'Apply and combine your skills' : 'Create and present a complete project'}</p></article>)}</div> : progress?.completedAt ? (
+      {activeTab === 'checkpoint' ? <CourseCheckpointPage course={course} level={currentLevel} /> : activeTab === 'overview' ? null : progress?.completedAt ? (
         <CourseCertificate courseTitle={course.title} completedAt={progress.completedAt} />
       ) : (
         <div className="lesson-layout">
