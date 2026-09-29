@@ -19,7 +19,7 @@ export default function SignInPage() {
         <div className="sign-in-card">
           <div className="card-heading">Welcome to your next chapter</div>
           <p className="card-copy">Sign in or create an account to get started.</p>
-          <SignIn routing="hash" />
+          <SignIn routing="hash" appearance={{ elements: { rootBox: 'learnwithai-signin-root', card: 'learnwithai-signin-clerk-card' } }} />
         </div>
       </section>
       <footer className="app-footer">Small steps. Big ideas. Your pace.</footer>

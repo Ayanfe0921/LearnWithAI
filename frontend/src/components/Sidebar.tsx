@@ -1,9 +1,9 @@
-import { BookOpen, ChevronRight, LayoutDashboard, Sparkles, Trophy } from './Icons'
+import { Award, BookOpen, ChevronRight, CreditCard, LayoutDashboard, Sparkles, Trophy, UserRound } from './Icons'
 import Brand from './Brand'
 import type { CompanionId } from '../data/companions'
 import { companions } from '../data/companions'
 
-export type DashboardSection = 'home' | 'courses' | 'progress'
+export type DashboardSection = 'home' | 'courses' | 'progress' | 'achievements' | 'profile' | 'billing'
 
 export default function Sidebar({
   companionId,
@@ -26,6 +26,9 @@ export default function Sidebar({
         <button className={section === 'home' ? 'active' : ''} onClick={() => onSectionChange('home')}><LayoutDashboard size={18} /> Overview</button>
         <button className={section === 'courses' ? 'active' : ''} onClick={() => onSectionChange('courses')}><BookOpen size={18} /> Courses</button>
         <button className={section === 'progress' ? 'active' : ''} onClick={() => onSectionChange('progress')}><Trophy size={18} /> My progress</button>
+        <button className={section === 'achievements' ? 'active' : ''} onClick={() => onSectionChange('achievements')}><Award size={18} /> Achievements</button>
+        <button className={section === 'profile' ? 'active' : ''} onClick={() => onSectionChange('profile')}><UserRound size={18} /> Profile</button>
+        <button className={section === 'billing' ? 'active' : ''} onClick={() => onSectionChange('billing')}><CreditCard size={18} /> Payments</button>
       </nav>
       <div className="sidebar-bottom">
         <div className="companion-mini">

@@ -7,13 +7,20 @@ import FirstCourseCard from '../components/FirstCourseCard'
 import LearningStatCard from '../components/LearningStatCard'
 import Sidebar, { type DashboardSection } from '../components/Sidebar'
 import { companions, type CompanionId } from '../data/companions'
+import AchievementsPage from './AchievementsPage'
+import BillingPage from './BillingPage'
+import ProfilePage from './ProfilePage'
+import ProgressPage from './ProgressPage'
+import { useProgressData } from '../hooks/useProgressData'
 
 export default function DashboardPage({ companionId, onChangeCompanion }: { companionId: CompanionId; onChangeCompanion: () => void }) {
   const { user } = useUser()
   const [section, setSection] = useState<DashboardSection>('home')
+  const { progress } = useProgressData()
   const companion = companions.find(({ id }) => id === companionId) ?? companions[0]
   const firstName = user?.firstName || user?.username || 'Learner'
-  const title = section === 'home' ? 'Overview' : section === 'courses' ? 'Courses' : 'My progress'
+  const title = section === 'home' ? 'Overview' : section === 'courses' ? 'Courses' : section === 'progress' ? 'My progress' : section === 'achievements' ? 'Achievements' : section === 'profile' ? 'Profile' : 'Payments'
+  const inProgressCourses = progress.filter(({ percent, completedAt }) => percent > 0 && !completedAt).length
 
   return (
     <div className="dashboard-shell">
@@ -25,7 +32,7 @@ export default function DashboardPage({ companionId, onChangeCompanion }: { comp
         </header>
 
         <div className="dashboard-content">
-          {section === 'courses' ? <CourseCatalogPage /> : <>
+          {section === 'courses' ? <CourseCatalogPage /> : section === 'progress' ? <ProgressPage onExplore={() => setSection('courses')} /> : section === 'achievements' ? <AchievementsPage /> : section === 'profile' ? <ProfilePage onOpenBilling={() => setSection('billing')} /> : section === 'billing' ? <BillingPage /> : <>
           <section className="welcome-banner">
             <div className="welcome-copy">
               <div className="eyebrow"><span className="eyebrow-dot" /> YOUR NEXT CHAPTER STARTS HERE</div>
@@ -37,7 +44,7 @@ export default function DashboardPage({ companionId, onChangeCompanion }: { comp
 
           <section className="stats-grid" aria-label="Learning stats">
             <LearningStatCard icon={<Flame size={19} />} tone="cyan" label="LEARNING STREAK" value="0" unit="days" description="Start a learning session today" />
-            <LearningStatCard icon={<BookOpen size={19} />} tone="blue" label="COURSES IN PROGRESS" value="0" description="Your learning paths appear here" />
+            <LearningStatCard icon={<BookOpen size={19} />} tone="blue" label="COURSES IN PROGRESS" value={String(inProgressCourses)} description="Your learning paths appear here" />
             <LearningStatCard icon={<Target size={19} />} tone="gold" label="LEARNING GOAL" value="Set one" description="Choose what you want to learn next" />
           </section>
 
