@@ -158,6 +158,9 @@ h1, h2, h3, p { margin-top: 0; }
 .course-card-body > p { min-height: 49px; margin: 0; color: #7f90a1; font-size: 10px; line-height: 1.65; }
 .course-card-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 12px; padding-top: 10px; border-top: 1px solid #edf1f5; color: #8293a3; font-size: 9px; }
 .course-card-footer > span:first-child { display: inline-flex; align-items: center; gap: 5px; }
+.course-card-price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 7px; margin-top: 12px; color: #718397; font-size: 9px; }
+.course-card-price strong { color: #294864; font: 800 16px Manrope, sans-serif; }
+.course-card-price span { color: #377a68; font-weight: 700; }
 .course-open-icon { display: grid; width: 27px; height: 27px; flex: 0 0 27px; place-items: center; border-radius: 9px; color: #138baa; background: #ebf9fc; }
 .catalog-empty { display: grid; min-height: 230px; place-content: center; justify-items: center; border: 1px dashed #dfe8ef; border-radius: 15px; background: #fff; text-align: center; }
 .catalog-empty > span { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 13px; color: #168eaf; background: #eaf9fc; }
@@ -226,11 +229,11 @@ h1, h2, h3, p { margin-top: 0; }
 .lesson-overview p { margin: 0; color: #71869b; font-size: 10px; line-height: 1.65; }
 .lesson-overview-art { display: grid; width: 132px; height: 102px; justify-self: center; place-items: center; overflow: hidden; border-radius: 24px; background: linear-gradient(145deg, #dff7fb, #e9ecff); box-shadow: inset 0 0 0 1px #fff; font-size: 54px; }
 .lesson-overview-art img { width: 100%; height: 100%; object-fit: cover; }
-.lesson-inline-illustration { display: block; width: min(100%, 420px); max-height: 230px; margin: 20px auto; border: 1px solid #e5edf3; border-radius: 14px; box-shadow: 0 8px 22px #1838580d; object-fit: cover; }
-.lesson-notes { display: grid; gap: 12px; margin: 20px 0 24px; }
-.lesson-note-section { padding: 13px 15px; border: 1px solid #e7eef3; border-radius: 12px; background: #fbfdff; }
-.lesson-note-section h3 { margin: 0 0 7px; color: #2d5874; font: 800 11px Manrope, sans-serif; }
-.lesson-note-section p { margin: 0; color: #4e657a; font-size: 11px; line-height: 1.8; }
+.lesson-inline-illustration { display: block; width: 100%; max-height: 330px; margin: 22px auto 26px; border: 1px solid #e5edf3; border-radius: 14px; box-shadow: 0 8px 22px #1838580d; object-fit: contain; }
+.lesson-notes { display: grid; gap: 15px; margin: 22px 0 28px; }
+.lesson-note-section { padding: 18px 20px; border: 1px solid #e7eef3; border-radius: 13px; background: #fbfdff; }
+.lesson-note-section h3 { margin: 0 0 10px; color: #234c68; font: 800 14px Manrope, sans-serif; }
+.lesson-note-section p { margin: 0; color: #4e657a; font-size: 13px; line-height: 1.9; }
 .lesson-practice-card, .lesson-checkpoint-card { margin: 13px 0; padding: 15px; border: 1px solid #dcebf1; border-radius: 13px; background: #f5fbfd; }
 .lesson-practice-card h3 { margin: 5px 0 7px; color: #294864; font: 800 14px Manrope, sans-serif; }
 .lesson-practice-card p, .lesson-checkpoint-card p { margin: 0 0 11px; color: #536d82; font-size: 10px; line-height: 1.75; }

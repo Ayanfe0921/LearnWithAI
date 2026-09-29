@@ -24,6 +24,7 @@ const courseSchema = new Schema({
   image: { type: String, required: true },
   imageAlt: { type: String, required: true },
   description: { type: String, required: true },
+  referencePriceNgn: { type: Number, min: 1, required: true },
   priceNgn: { type: Number, min: 1 },
   chapters: { type: [chapterSchema], default: [] },
 }, { timestamps: true })

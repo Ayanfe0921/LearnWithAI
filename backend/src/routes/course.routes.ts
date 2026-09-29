@@ -8,7 +8,7 @@ const router = Router()
 router.get('/', async (_req, res, next) => {
   try {
     const courses = await Course.find().sort({ title: 1 }).lean()
-    res.json(courses.map(({ slug, title, category, level, duration, lessons, emoji, accent, image, imageAlt, description, priceNgn }) => ({ id: slug, title, category, level, duration, lessons, emoji, accent, image, imageAlt, description, priceNgn: configuredCoursePrice(slug, priceNgn), chapters: [] })))
+    res.json(courses.map(({ slug, title, category, level, duration, lessons, emoji, accent, image, imageAlt, description, referencePriceNgn, priceNgn }) => ({ id: slug, title, category, level, duration, lessons, emoji, accent, image, imageAlt, description, referencePriceNgn, priceNgn: configuredCoursePrice(slug, priceNgn), chapters: [] })))
   } catch (error) { next(error) }
 })
 

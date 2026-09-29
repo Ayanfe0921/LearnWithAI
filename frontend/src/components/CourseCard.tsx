@@ -19,6 +19,7 @@ export type CourseCardData = {
   imageCredit?: string
   imageSource?: string
   priceNgn?: number
+  referencePriceNgn?: number
   isAdmin?: boolean
   chapters: CourseChapter[]
 }
@@ -36,6 +37,7 @@ export default function CourseCard({ course, onSelect }: { course: CourseCardDat
         <div className="course-meta"><span className="course-level-badge">{course.level} level</span><span className="meta-dot" /><span><Clock3 size={13} /> {course.duration}</span></div>
         <h3>{course.title}</h3>
         <p>{course.description}</p>
+        {course.priceNgn && <div className="course-card-price"><strong>₦{course.priceNgn.toLocaleString('en-NG')}</strong><span>Course price</span></div>}
         <div className="course-card-footer"><span><BookOpen size={14} /> {course.lessons} bite-sized lessons</span><button className="course-open-icon" onClick={() => onSelect(course)} aria-label={`Open ${course.title}`}><ArrowUpRight size={17} /></button></div>
       </div>
     </article>
